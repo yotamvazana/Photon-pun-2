@@ -17,12 +17,6 @@ namespace Photon.Pun.Demo.PunBasics
 {
 	#pragma warning disable 649
 
-	/// <summary>
-	/// Game manager.
-	/// Connects and watch Photon Status, Instantiate Player
-	/// Deals with quiting the room and the game
-	/// Deals with level loading (outside the in room synchronization)
-	/// </summary>
 	public class GameManager : MonoBehaviourPunCallbacks
     {
 
@@ -44,9 +38,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         #region MonoBehaviour CallBacks
 
-        /// <summary>
-        /// MonoBehaviour method called on GameObject by Unity during initialization phase.
-        /// </summary>
+       
         void Start()
 		{
 			Instance = this;
@@ -81,12 +73,10 @@ namespace Photon.Pun.Demo.PunBasics
 
 		}
 
-		/// <summary>
-		/// MonoBehaviour method called on GameObject by Unity on every frame.
-		/// </summary>
+		
 		void Update()
 		{
-			// "back" button of phone equals "Escape". quit app if that's pressed
+			
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
 				QuitApplication();
@@ -97,41 +87,33 @@ namespace Photon.Pun.Demo.PunBasics
 
         #region Photon Callbacks
 
-        /// <summary>
-        /// Called when a Photon Player got connected. We need to then load a bigger scene.
-        /// </summary>
-        /// <param name="other">Other.</param>
+       
         public override void OnPlayerEnteredRoom( Player other  )
 		{
-			Debug.Log( "OnPlayerEnteredRoom() " + other.NickName); // not seen if you're the player connecting
+			Debug.Log( "OnPlayerEnteredRoom() " + other.NickName); 
 
 			if ( PhotonNetwork.IsMasterClient )
 			{
-				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); // called before OnPlayerLeftRoom
+				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); 
 
 				LoadArena();
 			}
 		}
 
-		/// <summary>
-		/// Called when a Photon Player got disconnected. We need to load a smaller scene.
-		/// </summary>
-		/// <param name="other">Other.</param>
+		
 		public override void OnPlayerLeftRoom( Player other  )
 		{
-			Debug.Log( "OnPlayerLeftRoom() " + other.NickName ); // seen when other disconnects
+			Debug.Log( "OnPlayerLeftRoom() " + other.NickName ); 
 
 			if ( PhotonNetwork.IsMasterClient )
 			{
-				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); // called before OnPlayerLeftRoom
+				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); 
 
 				LoadArena(); 
 			}
 		}
 
-		/// <summary>
-		/// Called when the local player left the room. We need to load the launcher scene.
-		/// </summary>
+		
 		public override void OnLeftRoom()
 		{
 			SceneManager.LoadScene("PunBasics-Launcher");
